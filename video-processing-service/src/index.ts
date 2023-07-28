@@ -15,18 +15,6 @@ app.post("/process-video", (req, res) => {
         res.status(400).send("Bad request: Missing file path.");
     }
 
-    // Convert video file to 360p
-    ffmpeg(inputFilePath)
-        .outputOptions("-vf", "scale=-1:360")
-        .on("end", () => { // Success
-            res.status(200).send("Video processing finished successfully");
-        })
-        .on("error", (err) => { // Failure
-            console.log(`An error occurred: ${err.message}`);
-            res.status(500).send("Internal server error");
-        })
-        .save(outputFilePath);
-
 })
 
 const port = process.env.PORT || 3000;
