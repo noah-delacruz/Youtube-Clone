@@ -1,7 +1,6 @@
 import { Storage } from '@google-cloud/storage';
 import fs from 'fs';
 import ffmpeg from 'fluent-ffmpeg';
-import { dir } from 'console';
 
 // Create instance of Google Cloud Storage (GCS)
 const storage = new Storage();
@@ -17,7 +16,8 @@ const localProcessedVideoPath = "./processed-videos";
  * Creates the local directories for raw and processed videos 
  */
 export function setupDirectories() {
-
+    ensureDirectoryExistense(localRawVideoPath);
+    ensureDirectoryExistense(localProcessedVideoPath);
 }
 
 /*
