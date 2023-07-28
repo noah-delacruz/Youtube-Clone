@@ -68,6 +68,29 @@ export async function uploadProcessedVideo(fileName: string) {
 
     // Set file to public so that every video can be viewed by users on the site
     await bucket.file(fileName).makePublic();
+}
 
-
+/*
+ * @param filePath - The path of the file to delete
+ * @returns A promise that resolves when the file has been deleted
+ */
+function deleteFile(filePath: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        // Check if file path exists before deleting
+        if (fs.existsSync(filePath)) {
+            fs.unlink(filePath, (err) => {
+                if(err) {
+                    console.log(`Failed to delete file at ${filePath}`, err);
+                    reject(err);
+                }
+                else {
+                    console.log(`File deleted at ${filePath}`);
+                    resolve();
+                }
+            })
+        }
+        else {
+            console.log(`File not found at ${filePath}, skipping the deletion of file`);
+        }
+    })
 }
