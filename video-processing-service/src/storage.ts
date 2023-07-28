@@ -1,6 +1,7 @@
 import { Storage } from '@google-cloud/storage';
 import fs from 'fs';
 import ffmpeg from 'fluent-ffmpeg';
+import { dir } from 'console';
 
 // Create instance of Google Cloud Storage (GCS)
 const storage = new Storage();
@@ -109,4 +110,15 @@ function deleteFile(filePath: string): Promise<void> {
             console.log(`File not found at ${filePath}, skipping the deletion of file`);
         }
     })
+}
+
+/*
+ * Ensures a directory exists, otherwise creates it
+ * @param dirPath - The directory path to check
+ */
+function ensureDirectoryExistense(dirPath: string) {
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true }); // recursive: true enables creating nested directories
+        console.log(`Directory created at ${dirPath}`);
+    }
 }
