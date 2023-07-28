@@ -46,7 +46,7 @@ export function convertVideo(rawVideoName: string, processedVideoName: string) {
  * @returns A promise that resolves when the file has been downloaded
  */
 export async function downloadRawVideo(fileName: string) {
-    await storage.bucket(rawVideoBucketName)
+    await storage.bucket(rawVideoBucketName) // Await so no code executs until promise resolves (function must be async to await)
         .file(fileName)
         .download({ destination: `${localRawVideoPath}/${fileName}`});
     
@@ -58,5 +58,16 @@ export async function downloadRawVideo(fileName: string) {
  * @returns A promise that resolves the file has been uploaded
  */
 export async function uploadProcessedVideo(fileName: string) {
+    const bucket = storage.bucket(processedVideoBucketName);
+
+    // Upload file
+    await bucket.upload(`${localProcessedVideoPath}/${fileName}`, {
+        destination: fileName
+    })
+    console.log(`${localProcessedVideoPath}/${fileName} uploaded to gs://${processedVideoBucketName}/${fileName}`)
+
+    // Set file to public so that every video can be viewed by users on the site
+    await bucket.file(fileName).makePublic();
+
 
 }
