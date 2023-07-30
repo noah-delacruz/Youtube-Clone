@@ -23,3 +23,11 @@ const auth = getAuth(app);
 export function signInWithGoogle() {
     return signInWithPopup(auth, new GoogleAuthProvider());
 }
+
+/**
+ * Signs the user out
+ * @returns A promise that resolves when the user is signed out
+ */
+export function signOut() {
+    return auth.signOut();
+}
