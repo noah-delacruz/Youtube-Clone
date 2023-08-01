@@ -19,7 +19,7 @@ export default function Navbar() {
         
         // Clean up subscription on unmount
         return () => unsubscribe();
-    });
+    }, []);
 
     return (
         <nav className={styles.nav}>
