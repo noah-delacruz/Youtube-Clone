@@ -18,5 +18,5 @@ export async function uploadVideo(file: File) {
         }
     });
 
-    return
+    return;
 }
